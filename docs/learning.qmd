@@ -1,0 +1,75 @@
+---
+title: "Reproducible Document"
+author: "Line Sahlholdt Hansen"
+format: html
+---
+
+Quarto er en slags ny "R markdown" - Quarto er nyt, så det henvises somme tider til som R markdown stadig.
+I Quarto er tekst ikke læst som kode (som normalt i R). Det virker ikke bare at skrive kode som tekst i R. Den læser det ikke som kode, når man er i Quarto. Man skal derfor indsætte en "code chunk", som indsættes ved at finde den ved at søge i menuen, som kommer frem ved at skrive "cmnd+shift+p". 
+
+Under "format" øverst i dokumentet kan skiftes mellem "html", "docx" og "pdf" - det ændrer hvordan outputtet vises, når man trykker gem og derefter "Render". 
+
+Under tandhjulikonet kan visningen af dokumentet ændres - fx enten på hjemmeside eller bare i siden af R. 
+"Help" --> "keyboard shortcut help" giver oversigt over genveje. 
+
+Code chunks kan navngives som fx herunder "r setup", og navne kan ikke genbruges i samme dokument. Kan ses under "outline" som kursiv tekst. "Overskrifterne" er lavet med fx ## (se sektion 15.8 for flere formateringsmuligheder).
+
+
+```{r setup}
+library(tidyverse)
+```
+
+## Writing R code
+
+```{r}
+2+2
+```
+
+Mange funktioner er ikke default-funktioner i R, når man åbner det. Actions/funktioner kan hentes i pakker. 
+
+
+Alt i R er et "object", og man kan selv oprette objekter ved at "tildele" noget med "<-":
+
+weight_kilos <- 100
+weight_kilos
+
+Der findes forskellige typer datatyper. Se "15.6" i undervisningsmateriale. 
+Når man skriver "" betyder det, at man leder efter ...?
+
+
+Functions (markeres med parentes ()) i R er noget, der giver en "action" - man gør noget med noget.
+Prøver head-action herunder:
+
+head(airquality)
+head
+
+
+------------ Exercise 15.9 -----------
+
+## About me
+- Line Sahlholdt Hansen
+- Steno Diabetes Center Aarhus
+- Aarhus Universitet
+
+I am a **PhD student** conducting a study on *optimizing follow up after pregnancies affected by gestational diabetes*. 
+
+## Simple code
+```{r}
+3*3
+```
+
+----------- Punkt 16: Version control with Git ------------
+
+Git kan bruges til at registrere/logge ændringer løbende, så man ikke ender med mange versioner af et dokument. 
+Klik "git" --> "commit". Kan skrive under "commmit message" hvorfor man ændrer noget. Før man kan gøre det, skal man vælge hvilke filer, man vil tracke ved at "add"e dem. Sæt fluben ved dokumentet og vælg "commit", tror jeg - se online i undervisningsdokument. 
+
+Man kan bruge gitignore til fx personfølsomme dokumenter mv. Man kan bruge denne funktion til at definere hvilke dokumenter, der er tale om: usethis::use_git_ignore(c("*.html", "*_files/"))
+Hermed har man sagt, at filer af denne type skal i gitignore. Disse uploades dermed ikke til github? Bruges fx ved dokumenter med personfølsomme data.
+
+
+
+
+
+
+
+
