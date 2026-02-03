@@ -3,6 +3,8 @@ TODO: Add more to the title of your project here
 Skriver følgende som øvelse - skal se ændringer i Git:
 Line Sahlholdt Hansen, PhD student
 
+usethis::use_git_ignore(c("*.html", "*_files/"))
+
 # LearningR:
 
 TODO: Give a brief description of what your project is about
