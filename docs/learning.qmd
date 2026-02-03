@@ -66,7 +66,8 @@ Klik "git" --> "commit". Kan skrive under "commmit message" hvorfor man ændrer 
 Man kan bruge gitignore til fx personfølsomme dokumenter mv. Man kan bruge denne funktion til at definere hvilke dokumenter, der er tale om: usethis::use_git_ignore(c("*.html", "*_files/"))
 Hermed har man sagt, at filer af denne type skal i gitignore. Disse uploades dermed ikke til github? Bruges fx ved dokumenter med personfølsomme data.
 
-
+## Testing for Git
+Dette er en del af øvelsen ved punkt 16. Jeg skal øve at registrere ændringer i git. 
 
 
 
