@@ -5,6 +5,8 @@ Line Sahlholdt Hansen, PhD student
 
 usethis::use_git_ignore(c("*.html", "*_files/"))
 
+Dette er en test. Jeg skal øve at pushe ting til github. 
+
 # LearningR:
 
 TODO: Give a brief description of what your project is about
