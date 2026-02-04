@@ -21,7 +21,25 @@ Code chunks kan navngives som fx herunder "r setup", og navne kan ikke genbruges
 library(tidyverse)
 
 post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
+
+small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
+
+tidier_post_meal_data <- small_post_meal_data |>
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  ) |>
+  filter(glykemi == 0) |>
+  select(-glykemi)
+tidier_post_meal_data
 ```
+
+Linje med small_post_meal - gjort under sektion 20:
+Vi vil nu lave en ny variabel/dataframe i datasættet. Kommer ud i environment og laver nyt datasæt med de variable, som man vælger. I undervisningen skriver de denne linje under "setup" chunk (har jeg også gjort) - gør dette ved eget datasæt, fordi denne altid kører som noget af det første, når man arbejder i programmet. 
+Kører denne i setup: "small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)"
+
+Linje med tidier - gjort under sektion 20:
+Gør sådan at de omdøbte kolonner kommer i datasættet og ikke bare outputtet. Gøres i setup-chunk. Gør dette i setup-chunk i eget datasæt også - sikrer at ændringerne indlæses som noget af det første. Omdøber nogle af tingene i det lille datasæt. Det er koden, der starter med "tidier".
 
 ## Writing R code
 
@@ -228,13 +246,9 @@ select(post_meal_data, contains("0"))
 
 
 Vi vil nu lave en ny variabel/dataframe i datasættet. Kommer ud i environment og laver nyt datasæt med de variable, som man vælger. 
-I undervisningen skriver de denne linje under "setup" chunk - gør dette ved eget datasæt, fordi denne altid kører som noget af det første, når man arbejder i programmet. 
+I undervisningen skriver de denne linje under "setup" chunk (har jeg også gjort) - gør dette ved eget datasæt, fordi denne altid kører som noget af det første, når man arbejder i programmet. 
+Kører denne i setup: "small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)"
 
-```{r}
-post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
-
-small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
-```
 ## Renaming Columns
 rename er en funktion, der kan omdøbe kolonner.
 Disse to pipes gør helt det samme: |> og %>%
@@ -281,3 +295,32 @@ post_meal_data |>
   select(id, BMI, Length, Weight, Age) |>
   rename(Height = Length)
 ```
+
+------- Filtering data by row med filter-funktion ------------
+
+##Filtering data med filter-funktion 
+Om kodeblokken herunder:
+Linje 1: Vil finde deltagere med glykemi = 1 (præcis 1) (vises som == i kode). Koden herunder siger, at hvis glykemi = 1, skal de beholdes - alle andre fjernes. 
+Linje 2: Kun rækker med BMI større end eller lig med 25.
+Linje 3: Vil kun se alle i kontrolgruppen. Skriver i "" fordi der er tale om tekst-kolonne.
+Linje 4: Want people who are in control group AND BMI > 25. Komma i denne sammenhæng betyder "and".
+Linje 5: Samme som linje 4, men med "eller" i stedet for "and". Giver self flere rækker, fordi det er "eller" og ikke "og". 
+
+```{r}
+small_post_meal_data |>
+  filter(glykemi == 1)
+
+small_post_meal_data |>
+  filter(BMI >= 25)
+
+small_post_meal_data |>
+  filter(Group == "CTR")
+
+small_post_meal_data |>
+  filter(Group == "CTR", BMI >= 25)
+
+small_post_meal_data |>
+  filter(Group == "CTR" | BMI >= 25)
+```
+
+Gør sådan at de omdøbte kolonner kommer i datasættet og ikke bare outputtet. Gøres i setup-chunk. Gør dette i setup-chunk i eget datasæt også - sikrer at ændringerne indlæses som noget af det første. Omdøber nogle af tingene i det lille datasæt. Det er koden, der starter med "tidier" - se evt under "setup" øverst.
