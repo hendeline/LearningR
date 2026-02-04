@@ -199,14 +199,55 @@ ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
 Hjemmeside hvor man kan lægge sit git repository. 
 Vær varsom med hvad man lægger ind i git, fordi det kan blive public på github. 
 Øvelser herfra gøres i console, fordi ellers kommer alt dette op på github. 
+Vi har uploadet projektet til github, tror jeg. 
+Vi øver push/pull fra/til github. 
+
+Hvis man vil øve github kan man bruge pakken "saperlipopette" - en slags escaperoom. Sætter et problem op, som skal løses med git og R. 
 
 
+------ Section 20: Data management and wrangling -----------
+
+## Selecting data med select-function:
+Vil gerne se på "age" collum i dataframe "post meal data"-set - se output fra koder nednefor.
+Hvis man IKKE vil se en kollonne, skal man skrive "-" (linje 3 i koden herunder). Så viser den de andre kolonner, men ikke den, man har skrevet minus foran. 
+Man kan vælge select-funktion til at udvælge særlige kolonner. Fx hvis flere indeholder "insulin", "PG" eller noget andet (linje 4+5+6 herunder) - kan enten udvælges ved at skrive "contains", starts_with" eller "ends_with". Collum names are considered characters (selvom der er tal i) - derfor skal man skrive det i "". 
+
+```{r}
+select(post_meal_data, Age)
+
+select(post_meal_data, Age, BMI, Weight)
+
+select(post_meal_data, -Group)
+
+select(post_meal_data, starts_with("PG"))
+
+select(post_meal_data, ends_with("DXA"))
+
+select(post_meal_data, contains("0"))
+```
 
 
+Vi vil nu lave en ny variabel/dataframe i datasættet. Kommer ud i environment og laver nyt datasæt med de variable, som man vælger. 
+I undervisningen skriver de denne linje under "setup" chunk - gør dette ved eget datasæt, fordi denne altid kører som noget af det første, når man arbejder i programmet. 
 
+```{r}
+post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
 
+small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
+```
+## Renaming Columns
+rename er en funktion, der kan omdøbe kolonner.
+Disse to pipes gør helt det samme: |> og %>%
+Pipen siger "within this dataframe" som man har skrevet forud (se herunder).
+Rename: Skriv nyt navn FØRST og originalt navn SIDST.
 
-
+```{r}
+small_post_meal_data |>
+  rename(
+    auc_glucose = auc_pg,
+    auc_insulin = auc_ins
+  )
+```
 
 
 
