@@ -14,8 +14,10 @@ Under tandhjulikonet kan visningen af dokumentet ændres - fx enten på hjemmesi
 
 Code chunks kan navngives som fx herunder "r setup", og navne kan ikke genbruges i samme dokument. Kan ses under "outline" som kursiv tekst. "Overskrifterne" er lavet med fx ## (se sektion 15.8 for flere formateringsmuligheder).
 
-
+"option + i" = |
 ```{r setup}
+#| message: false
+#| warning: false
 library(tidyverse)
 
 post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
@@ -84,6 +86,14 @@ Har under "setup" øverst i dokumentet tilegnet dette datasæt navnet: post_meal
 
 Forkortelsen "chr" = characters (bogstaver) og "dbl" (decible?) = tal. Bruges somme tider når datasæt vises (fx ved glimpse-funktion).
 
+Personfølsomme data eller meget store data skal i gitignore!
+
+Hvad skal vises fra code chunks efter render:
+"option + i" = |
+Man kan vælge, hvad der skal vises i sit render-output. Se hvad jeg har skrevet under "setup"-code chunk øverst i dokumentet: "#| message: false" - default er at den er "true", hvilket betyder, at alle messages vises. Når den skiftes til false, vises ingen beskeder. Det samme gælder for "warning". Dette vil kun gælde for outpus fra denne specifikke code chunk. Man kan gøre sådan, at det gælder for alle code chunks - se dette på undervisningsdokument.
+
+
+
 ##Showing the data
 ```{r}
 post_meal_data
@@ -91,6 +101,26 @@ post_meal_data
 glimpse(post_meal_data)
 ```
 
+
+---- Om at visualisere data - sektion 18 -------
+
+## Plot one continous variable
+
+Undersøger distribution of BMI within diabetes patients: 
+aes = æstetik - kan tilskrive "x" at vise en variabelfx BMI
+geom siger noget om hvilken type plot, man vil vise
+Ved manglende værdier kan man skrive "na.rm=F" = "NA remove = False" - så beholder den datarækker med mangelende værdier. R fjerner automatisk disse ellers.
+"fig-cap" giver figure caption under figuren
+"label" giver reference i teksten, så hvis man kører musen over denne tekst, vil den vise figuren. 
+
+```{r}
+#| fig-cap: "Distribution of BMI"
+#| label: fig-bmi-histo
+ggplot(post_meal_data,aes(x = BMI)) +
+  geom_histogram(na.rm=F)
+```
+Pga label kan man skrive følgende og referere til figuren:
+See @fig-bmi-histo
 
 
 
