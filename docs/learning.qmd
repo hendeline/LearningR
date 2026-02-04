@@ -135,6 +135,22 @@ ggplot(post_meal_data, aes(x = glykemi)) +
 
 See @fig-glykemi-bar above for a cool plot!
 
+Ved continous data kan man plotte to variabler (en på hhv x- og y-aksen). Øvelsen herover er afbilledet af "discrete" data med kun en variabel. 
+
+## Plotting to discrete variables
+fill vil gerne have chr-inputs, men i dette tilfælde herunder er fill (glykemi) numbers. Derfor ændres til "as.charactor"
+
+```{r}
+ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) + 
+  geom_bar()
+
+```
+Koden herover viser barrene i samme kolonner. Hvis man vil skille dem ad kan man skrive følgende i geom_bar-funktionen, så de vises adskilt:
+
+```{r}
+ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) + 
+  geom_bar(position=position_dodge())
+```
 
 
 
