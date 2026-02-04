@@ -173,7 +173,8 @@ Naming:
 R er ligeglad med mellemrum, læses ikke. 
 
 Styling:
-Skrev command+shift+p --> "style active file", og så skulle den installere en pakke. Når denne funktion kører, fjerner den de visualiseringer, vi har lavet, men de kan bare køres igen, så man kan se det. Den justerer teskten i koden og ikke selve plottene. Dette gjort nu, og der står "using style transformers....." i console, og det skal bruges nu:
+Skrev command+shift+p --> "style active file", og så skulle den installere en pakke. Når denne funktion kører, fjerner den de visualiseringer/grafer, vi har lavet, men de kan bare køres igen, så man kan se det. Den justerer teskten i koden og ikke selve plottene, så teksten er pænere/mere overskuelig. 
+Dette gjort nu, og der står "using style transformers....." i console, og det skal bruges nu:
 
 ## Plotting two continous variables
 geom_point giver almindeligt scatter plot
@@ -193,6 +194,19 @@ ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
   geom_point() +
   geom_smooth()
 ```
+
+----- Section 19 om Github ------
+Hjemmeside hvor man kan lægge sit git repository. 
+Vær varsom med hvad man lægger ind i git, fordi det kan blive public på github. 
+Øvelser herfra gøres i console, fordi ellers kommer alt dette op på github. 
+
+
+
+
+
+
+
+
 
 
 
