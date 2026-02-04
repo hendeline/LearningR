@@ -17,6 +17,8 @@ Code chunks kan navngives som fx herunder "r setup", og navne kan ikke genbruges
 
 ```{r setup}
 library(tidyverse)
+
+post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
 ```
 
 ## Writing R code
@@ -68,6 +70,26 @@ Hermed har man sagt, at filer af denne type skal i gitignore. Disse uploades der
 
 ## Testing for Git
 Dette er en del af øvelsen ved punkt 16. Jeg skal øve at registrere ændringer i git. 
+
+------------ DAG 2 -------------
+Punkt 17. 
+Skriver kode i console for at downloade data, som er kopieret fra punkt 17.3 på hjemmesiden:
+# download.file(
+#  url = "https://zenodo.org/records/4989220/files/Eliasson_data2.csv?download=1",
+#  destfile = here::here("data/post-meal-insulin.csv")
+#)
+Dette giver datasættet "post-meal-insulin" i data-mappen. 
+
+Har under "setup" øverst i dokumentet tilegnet dette datasæt navnet: post_meal_data 
+
+Forkortelsen "chr" = characters (bogstaver) og "dbl" (decible?) = tal. Bruges somme tider når datasæt vises (fx ved glimpse-funktion).
+
+##Showing the data
+```{r}
+post_meal_data
+
+glimpse(post_meal_data)
+```
 
 
 
