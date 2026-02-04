@@ -26,7 +26,7 @@ post_meal_data <- read_csv2(here::here("data/post-meal-insulin.csv"))
 ## Writing R code
 
 ```{r}
-2+2
+2 + 2
 ```
 
 Mange funktioner er ikke default-funktioner i R, når man åbner det. Actions/funktioner kan hentes i pakker. 
@@ -59,7 +59,7 @@ I am a **PhD student** conducting a study on *optimizing follow up after pregnan
 
 ## Simple code
 ```{r}
-3*3
+3 * 3
 ```
 
 ----------- Punkt 16: Version control with Git ------------
@@ -116,8 +116,8 @@ Ved manglende værdier kan man skrive "na.rm=F" = "NA remove = False" - så beho
 ```{r}
 #| fig-cap: "Distribution of BMI"
 #| label: fig-bmi-histo
-ggplot(post_meal_data,aes(x = BMI)) +
-  geom_histogram(na.rm=F)
+ggplot(post_meal_data, aes(x = BMI)) +
+  geom_histogram(na.rm = F)
 ```
 Pga label kan man skrive følgende og referere til figuren:
 See @fig-bmi-histo
@@ -141,37 +141,58 @@ Ved continous data kan man plotte to variabler (en på hhv x- og y-aksen). Øvel
 fill vil gerne have chr-inputs, men i dette tilfælde herunder er fill (glykemi) numbers. Derfor ændres til "as.charactor"
 
 ```{r}
-ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) + 
+ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) +
   geom_bar()
-
 ```
 Koden herover viser barrene i samme kolonner. Hvis man vil skille dem ad kan man skrive følgende i geom_bar-funktionen, så de vises adskilt:
 
 ```{r}
-ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) + 
-  geom_bar(position=position_dodge())
+ggplot(post_meal_data, aes(x = Group, fill = as.character(glykemi))) +
+  geom_bar(position = position_dodge())
 ```
 
 ## Side by side plots
 Plotter to plots i samme code chunk med to forskellige variable på x-akserne:
 "fig-subcap" giver titler til hver af plots
-"layout-ncol angiver at de skal være side by side. Altså at "number of colums = 2".
+"layout-ncol" angiver at de skal være side by side. Altså at "number of colums = 2".
 ```{r fig-bmi-glycemia}
 #| fig-cap: "BMI and glycemia, side by side"
-#| fig-subcap: 
+#| fig-subcap:
 #|  - "Distribution of BMI"
 #|  - "Number of those with glycemia"
 #| layout-ncol: 2
 ggplot(post_meal_data, aes(x = BMI)) +
   geom_histogram()
 
-ggplot(post_meal_data, aes(x = glykemi)) + 
+ggplot(post_meal_data, aes(x = glykemi)) +
   geom_bar()
 ```
 
 
+Naming:
+R er ligeglad med mellemrum, læses ikke. 
 
+Styling:
+Skrev command+shift+p --> "style active file", og så skulle den installere en pakke. Når denne funktion kører, fjerner den de visualiseringer, vi har lavet, men de kan bare køres igen, så man kan se det. Den justerer teskten i koden og ikke selve plottene. Dette gjort nu, og der står "using style transformers....." i console, og det skal bruges nu:
 
+## Plotting two continous variables
+geom_point giver almindeligt scatter plot
+
+```{r}
+ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
+  geom_point()
+```
+Ser på plot, at det ligner, at der er en stigning med stigende BMI.
+
+Kan tilføje endnu et lag med "geom_smooth":
+
+```{r}
+#| fig-cap: "Scatterplot of BMI and AUC for glucose"
+#| label: fig-bmi-auc-pg
+ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
+  geom_point() +
+  geom_smooth()
+```
 
 
 
