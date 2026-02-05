@@ -32,6 +32,12 @@ tidier_post_meal_data <- small_post_meal_data |>
   filter(glykemi == 0) |>
   select(-glykemi)
 tidier_post_meal_data
+
+titied_post_meal_data <- tidier_post_meal_data |>
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First degree relative")
+  )
 ```
 
 Linje med small_post_meal - gjort under sektion 20:
@@ -324,3 +330,24 @@ small_post_meal_data |>
 ```
 
 Gør sådan at de omdøbte kolonner kommer i datasættet og ikke bare outputtet. Gøres i setup-chunk. Gør dette i setup-chunk i eget datasæt også - sikrer at ændringerne indlæses som noget af det første. Omdøber nogle af tingene i det lille datasæt. Det er koden, der starter med "tidier" - se evt under "setup" øverst.
+
+## Modifying data med mutate-funktion:
+Man kan fx opdele kolonner eller lægge et tal til alle kolonner. 
+You can use mutate() to compute a new column using existing columns in your dataset. You can multiply all values in a certain column by 2, or combine columns into a new column.
+Linje 1 herunder: Opretter ny kolonne "insulin_glucose_ratio" med mutate-funktionen. Skriver hvad kolonnen skal hedde og derefter, hvad den skal bestå af (altså auc_insulin divideret med auc_glucose). 
+Koden siger "Tag dette datasæt - vil mutate  og lave ny kolonne, som skal bestå af dette regnestykke".
+
+Linje 2: Modify existing collum. Komma adskiller de forskellige ting, mutate-funktionen skal gøre. Vil modify "group"-kolonne med "if_else"-funktion - siger at hvis dette indenfor denne specifikke kollone er sandt (altså at der står "CTR"), så skrift til dette (=control), og hvis IKKE det er sandt, skal der stå "first degree relative". Der skal altid stå tre ting efter denne "if_else"-funktion, fordi den kører efter denne logik. 
+
+Den nederste linje (2) indsættes under "setup" for at have et opdateret datasæt, som er "tidied". Dette er navngivet "tidied_post_meal_data" - se under setup. Giver nyt datasæt, som kan ses i environment.
+
+```{r}
+tidier_post_meal_data |>
+  mutate(insulin_glucose_ratio = auc_insulin / auc_glucose)
+
+tidier_post_meal_data |>
+  mutate(
+    insulin_glucose_ratio = auc_insulin / auc_glucose,
+    Group = if_else(Group == "CTR", "Control", "First degree relative")
+  )
+```
