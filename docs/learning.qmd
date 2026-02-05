@@ -33,7 +33,7 @@ tidier_post_meal_data <- small_post_meal_data |>
   select(-glykemi)
 tidier_post_meal_data
 
-titied_post_meal_data <- tidier_post_meal_data |>
+tidied_post_meal_data <- tidier_post_meal_data |>
   mutate(
     insulin_glucose_ratio = auc_insulin / auc_glucose,
     Group = if_else(Group == "CTR", "Control", "First degree relative")
@@ -349,5 +349,100 @@ tidier_post_meal_data |>
   mutate(
     insulin_glucose_ratio = auc_insulin / auc_glucose,
     Group = if_else(Group == "CTR", "Control", "First degree relative")
+  )
+```
+
+## Practice with filter and mutate - øvelse i sektion 20
+
+#Task 1:
+Use filter() to find how many participants have a BMI of more than or equal to 25 and less than or equal to 40, and are in the “FDR” Group. How many are there?
+
+#Task 2:
+Create a percent_body_fat column with mutate() by dividing the Fat.mass.DXA by the Weight, then multiplying by 100. Hint: In R, use * to multiply and / to divide. Then pipe to filter() to find out how many participants have a percent_body_fat greater than 30.
+
+```{r}
+# Task 1:
+post_meal_data |>
+  filter(BMI >= 25 & BMI <= 40 & Group == "FDR")
+# Får 8x85 tabel. Således 8 der opfylder disse kriterier.
+
+# Task 2:
+post_meal_data |>
+  mutate(
+    percent_body_fat = (Fat.mass.DXA / Weight) * 100
+  ) |>
+  filter(percent_body_fat > 30)
+# 10 personer har percent_body_fat > 30.
+```
+
+------ Sektion 21: Wrangling with visualizing --------
+
+## Visualizing  with jitter plot 
+
+Vil visualisere 
+Med denne linje: " mutate(overweight = BMI >= 25, "overweight", "not overweight")" siger vi, at vi laver en ny kolonne med overweight/not overweight, hvor kravet er, at BMI >= 25 - funktionen siger, at hvis dette er sandt, skal de navngives "overweight" og ellers "not overweight".
+ggplot-linjen siger hvordan plottet skal være (på x- og y-aksen). "+geom_jitter" giver punkterne i grafen - jitter-koden giver forskellige plots hver gang, man kører den - lægger den random, fordi de ellers ville ligge i en linje. Kan også køre "geom_boxplot" eller "geom_violin" - man kan lave flere plots oveni hinandne ved at skrive "+" imellem dem som herunder. Her er plottet to variable.
+
+
+```{r}
+tidied_post_meal_data |>
+  mutate(overweight = if_else(BMI >= 25, "Overweight", "Not overweight")) |>
+  ggplot(aes(x = overweight, y = insulin_glucose_ratio)) +
+  geom_jitter() +
+  geom_boxplot()
+```
+
+## Plotting three or more variables
+
+An "input argument".
+Nedenstående plot viser også hvordan man tilføjer farve. 
+
+```{r}
+tidied_post_meal_data |>
+  filter(BMI < 30) |>
+  ggplot(aes(x = Age, y = auc_insulin, colour = Group)) +
+  geom_point()
+```
+Laver nyt plot, hvor man deler på på "unge" og "gamle" med aldersskel 40 år.
+Bruger + når man har skrevet ggplot, fordi man ikke kan pipe i den funktion.
+
+facet_grid() splits the plot up into multiple subplots. For faceting to work, at least one of the first two arguments to facet_grid() is needed. The first two arguments are:
+cols: The discrete variable to use to facet the plot column-wise (i.e. side-by-side).
+rows: The discrete variable to use to facet the plot row-wise (i.e. stacked on top of each other).
+
+Undervejs i øvelsen ændres "Age" til BMI indeni koden. Ser BMI-plot herunder. Har fire dimentioner af information (alder, BMI, auc_insulin og group).
+
+```{r}
+tidied_post_meal_data |>
+  filter(BMI < 30) |>
+  mutate(young = if_else(Age < 40, "Young", "Old")) |>
+  ggplot(aes(x = BMI, y = auc_insulin, colour = Group)) +
+  geom_point() +
+  facet_grid(cols = vars(young))
+```
+
+Ændrer cols --> rows for at se, hvordan det ser ud:
+
+```{r}
+tidied_post_meal_data |>
+  filter(BMI < 30) |>
+  mutate(young = if_else(Age < 40, "Young", "Old")) |>
+  ggplot(aes(x = BMI, y = auc_insulin, colour = Group)) +
+  geom_point() +
+  facet_grid(rows = vars(young))
+```
+Adder labels:
+Og ændrer auc_insulin til insulin_glucose_ratio (giver mere mening klinisk, men ligemeget for kodelæring).
+
+```{r}
+tidied_post_meal_data |>
+  filter(BMI < 30) |>
+  mutate(young = if_else(Age < 40, "Young", "Old")) |>
+  ggplot(aes(x = BMI, y = insulin_glucose_ratio, colour = Group)) +
+  geom_point() +
+  facet_grid(rows = vars(young)) +
+  labs(
+    x = "Body mass index (BMI)",
+    y = "Insulin to glucose ratio"
   )
 ```
