@@ -452,7 +452,6 @@ tidied_post_meal_data |>
 
 
 ```{r}
-```{r}
 #| label: fig-multidimensional
 #| fig-cap: "Two, mult-dimensional plots of our data."
 #| fig-subcap:
@@ -479,25 +478,35 @@ post_meal_data |>
   geom_smooth() +
   facet_grid(cols = vars(insulin_insensitive))
 ```
-```
 
-## Øvelse: Change the colour scheme
+
+---- Sektion 22: Split, apply, and combine --------
+
+## Calculating summary statistics
 
 
 ```{r}
-# Tasks 1. and 2.
-post_meal_data |>
-  mutate(hyperglycemia = if_else(glykemi == 1, "Yes", "No")) |>
-  ggplot(aes(x = Group, fill = hyperglycemia)) +
-  geom_bar(position = position_dodge()) +
-  ___()
-
-# Tasks 3. and 4.
-post_meal_data |>
-  ggplot(aes(x = auc_pg, y = auc_ins, colour = BMI)) +
-  geom_point() +
-  ___()
+tidied_post_meal_data |>
+  summarise(max_bmi = max(BMI),
+            min_bmi = min(BMI))
 ```
+
+## Summarise with "group by"
+
+Vil gruppere by gruppe-kollonnen (ente kontroller eller first degree relavtives).
+Koden siger "for alle data med control, regn mean age" og "for alle data med bmi, beregn BMI".
+ungroup bruges efter, så man analuerer de grupper, man er ved at lave? Good practise, så man ikke ved en fejl har lavet uønskede grupper.
+
+```{r}
+tidied_post_meal_data |>
+  group_by(Group) |>
+  summarise(mean_age = mean(Age),
+            mean_bmi = mean(BMI)) |>
+  ungroup()
+  
+```
+
+
 
 
 
